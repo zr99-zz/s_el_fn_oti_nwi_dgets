@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
 
     <style>
@@ -17,8 +17,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    max-width: 100px;
-    <!-- min-height: 100%; -->
+    flex-shrink: 3;
+    min-height: 100%;
 }
 
 
@@ -29,7 +29,7 @@
 table {
     border-collapse: collapse;
     table-layout: fixed;
-    position: relative;
+    position: absolute;
     background-color: #fff;
     border: 2px solid #000000;
     box-shadow: 2px 2px 1px 0px #000000;
