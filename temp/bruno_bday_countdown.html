@@ -6,56 +6,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:900">
     <title>Time Difference</title>
     <style>
-        body {
-            background-color: white;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        #timer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: 'Lato', sans-serif;
-            letter-spacing: 5px;
-            color: #eeeeee;
-            text-transform: uppercase;
-        }
-        
-        .numbers {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 4em;
-            color: #183059;
-            text-align: center;
-        }
-        
-        .time-unit {
-            display: inline-block;
-            padding: 20px;
-            width: 100px;
-            border-radius: 5px;
-            margin: 5px;
-        }
-        
-        .months {
-            background: #EF2F3C;
-        }
-        
-        .weeks {
-            background: #eeeeee;
-            color: #183059;
-        }
-        
-        .days {
-            background: #276FBF;
-        }
-        
-        .hours {
-            background: #F0A202;
-        }
+        /* Your styling here */
     </style>
 </head>
 <body>
@@ -75,10 +26,9 @@
     </div>
 
     <script>
-        const myDate = new Date('Jun 21, 2023 09:00:00');
+        const myDate = new Date('Nov 5, 2023 09:00:00');
         const currentDate = new Date();
-        
-        // Calculate the time difference
+
         const timeDifference = myDate - currentDate;
         const millisecondsPerMonth = 30.44 * 24 * 60 * 60 * 1000;
         const millisecondsPerWeek = 7 * 24 * 60 * 60 * 1000;
@@ -90,10 +40,10 @@
         const days = Math.floor((timeDifference % millisecondsPerWeek) / millisecondsPerDay);
         const hours = Math.floor((timeDifference % millisecondsPerDay) / millisecondsPerHour);
 
-        document.getElementById("months").innerHTML = months;
-        document.getElementById("weeks").innerHTML = weeks;
-        document.getElementById("days").innerHTML = days;
-        document.getElementById("hours").innerHTML = hours;
+        document.getElementById("months").innerHTML = Math.abs(months);
+        document.getElementById("weeks").innerHTML = Math.abs(weeks);
+        document.getElementById("days").innerHTML = Math.abs(days);
+        document.getElementById("hours").innerHTML = Math.abs(hours);
     </script>
 </body>
 </html>
