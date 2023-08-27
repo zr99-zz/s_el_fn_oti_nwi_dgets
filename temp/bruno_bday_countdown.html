@@ -1,49 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:900">
-    <title>Time Difference</title>
-    <style>
-        /* Your styling here */
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+  }
+  .timer-box {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+  }
+  .months { background-color: #FF9A8B; }
+  .weeks { background-color: #A0E7E5; }
+  .days { background-color: #FFD700; }
+  .hours { background-color: #B4C5E4; }
+</style>
+<title>Count-Up Timer</title>
 </head>
 <body>
-    <div id="timer">
-        <div class="time-unit months">
-            <div id="months" class="numbers"></div>months
-        </div>
-        <div class="time-unit weeks">
-            <div id="weeks" class="numbers"></div>weeks
-        </div>
-        <div class="time-unit days">
-            <div id="days" class="numbers"></div>days
-        </div>
-        <div class="time-unit hours">
-            <div id="hours" class="numbers"></div>hours
-        </div>
-    </div>
+<div class="timer-box months" id="months">0 Months</div>
+<div class="timer-box weeks" id="weeks">0 Weeks</div>
+<div class="timer-box days" id="days">0 Days</div>
+<div class="timer-box hours" id="hours">0 Hours</div>
+<script>
+  // Hard-coded start date (YYYY, MM, DD, HH, MM, SS)
+  const startDate = new Date(2023, 0, 1, 0, 0, 0);
 
-    <script>
-        const myDate = new Date('Nov 5, 2023 09:00:00');
-        const currentDate = new Date();
+  function updateTimer() {
+    const currentDate = new Date();
+    const timeDiff = currentDate - startDate;
 
-        const timeDifference = myDate - currentDate;
-        const millisecondsPerMonth = 30.44 * 24 * 60 * 60 * 1000;
-        const millisecondsPerWeek = 7 * 24 * 60 * 60 * 1000;
-        const millisecondsPerDay = 24 * 60 * 60 * 1000;
-        const millisecondsPerHour = 60 * 60 * 1000;
+    const months = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30.44));
+    const weeks = Math.floor((timeDiff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24 * 7));
+    const days = Math.floor((timeDiff % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        const months = Math.floor(timeDifference / millisecondsPerMonth);
-        const weeks = Math.floor((timeDifference % millisecondsPerMonth) / millisecondsPerWeek);
-        const days = Math.floor((timeDifference % millisecondsPerWeek) / millisecondsPerDay);
-        const hours = Math.floor((timeDifference % millisecondsPerDay) / millisecondsPerHour);
+    document.getElementById('months').textContent = `${months} Months`;
+    document.getElementById('weeks').textContent = `${weeks} Weeks`;
+    document.getElementById('days').textContent = `${days} Days`;
+    document.getElementById('hours').textContent = `${hours} Hours`;
+  }
 
-        document.getElementById("months").innerHTML = Math.abs(months);
-        document.getElementById("weeks").innerHTML = Math.abs(weeks);
-        document.getElementById("days").innerHTML = Math.abs(days);
-        document.getElementById("hours").innerHTML = Math.abs(hours);
-    </script>
+  // Update the timer every minute
+  setInterval(updateTimer, 60000);
+</script>
 </body>
 </html>
