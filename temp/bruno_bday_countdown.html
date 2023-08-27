@@ -1,82 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Puppy Age Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:900">
+    <title>Puppy Age Widget</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Lato', sans-serif;
+            background-color: white;
             text-align: center;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
         }
 
-        #container {
-            max-width: 400px;
-            background-color: #fff;
+        #timer {
+            color: #eeeeee;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 0.7em;
+            letter-spacing: 5px;
+            margin-top: 50px;
+        }
+
+        .months, .weeks, .days {
+            display: inline-block;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
+            width: 100px;
             border-radius: 5px;
         }
 
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+        .months {
+            background: #276FBF;
         }
 
-        button:hover {
-            background-color: #0056b3;
+        .weeks {
+            background: #EF2F3C;
         }
 
-        #result {
-            margin-top: 20px;
-            font-size: 18px;
+        .days {
+            background: #F0A202;
+        }
+
+        .numbers {
+            font-family: 'Montserrat', sans-serif;
+            color: #183059;
+            font-size: 4em;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div id="container">
-        <h1>Puppy Age Calculator</h1>
-        <button onclick="calculateAge()">Calculate Age</button>
-        <p id="result"></p>
+    <div id="timer">
+        <div class="months">
+            <div id="months" class="numbers"></div>months
+        </div>
+        <div class="weeks">
+            <div id="weeks" class="numbers"></div>weeks
+        </div>
+        <div class="days">
+            <div id="days" class="numbers"></div>days
+        </div>
     </div>
 
     <script>
-        const puppyBirthday = new Date("2023-06-21"); // Replace with your puppy's actual birthday
+        const puppyBirthday = new Date("2023-01-15"); // Replace with your puppy's actual birthday
+        const millisecondsPerDay = 24 * 60 * 60 * 1000;
+        const widgetMonths = document.getElementById("months");
+        const widgetWeeks = document.getElementById("weeks");
+        const widgetDays = document.getElementById("days");
 
-        function calculateAge() {
-            const resultElement = document.getElementById("result");
+        function updateAge() {
             const currentDate = new Date();
-
             const timeDifference = currentDate - puppyBirthday;
+            const months = Math.floor(timeDifference / (30.44 * millisecondsPerDay));
+            const weeks = Math.floor(timeDifference / (7 * millisecondsPerDay));
+            const days = Math.floor(timeDifference / millisecondsPerDay);
 
-            const months = Math.floor(timeDifference / (30.44 * 24 * 60 * 60 * 1000));
-            const weeks = Math.floor(timeDifference / (7 * 24 * 60 * 60 * 1000));
-            const days = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
-
-            resultElement.innerHTML = `Age: ${months} months, ${weeks} weeks, ${days} days`;
+            widgetMonths.textContent = `${months} months`;
+            widgetWeeks.textContent = `${weeks} weeks`;
+            widgetDays.textContent = `${days} days`;
         }
+
+        // Calculate the time until the next midnight EST
+        const now = new Date();
+        const nextMidnight = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate() + 1,
+            0, 0, 0
+        );
+        const timeUntilNextMidnight = nextMidnight - now;
+
+        // Update the age every day at midnight EST
+        setTimeout(function() {
+            updateAge();
+            setInterval(updateAge, 24 * 60 * 60 * 1000); // Repeat every day
+        }, timeUntilNextMidnight);
     </script>
 </body>
 </html>
